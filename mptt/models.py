@@ -218,12 +218,6 @@ class MPTTModelBase(ModelBase):
             def __getattr__(self, attr):
                 if attr in attrs:
                     if attr not in warned_attrs:
-                        warnings.warn(
-                            "%s._meta.%s is deprecated and will be removed in mptt 0.6"
-                            % (cls.__name__, attr),
-                            #don't use DeprecationWarning, that gets ignored by default
-                            UserWarning,
-                        )
                         warned_attrs.add(attr)
                     return getattr(cls._mptt_meta, attr)
                 return super(_MetaSubClass, self).__getattr__(attr)
@@ -298,12 +292,6 @@ class MPTTModelBase(ModelBase):
                                     raise AttributeError("Manager isn't accessible via %s instances" % type.__name__)
 
                                 if not self.used:
-                                    warnings.warn(
-                                        'Implicit manager %s.%s will be removed in django-mptt 0.6. '
-                                        ' Explicitly define a TreeManager() on your model to remove this warning.'
-                                        % (cls.__name__, tree_manager_attr),
-                                        DeprecationWarning
-                                    )
                                     self.used = True
                                 return self.manager
 
